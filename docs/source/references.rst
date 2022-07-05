@@ -1,16 +1,18 @@
-.. List of References
-
-******************
-List of References
-******************
+**********
+References
+**********
 
 .. [Bourinet2009] J.-M. Bourinet, C. Mattrand, and V Dubourg. A review of recent features and improvements added to FERUM software. In Proc. of the 10th International Conference on Structural Safety and Reliability (ICOSSAR’09), Osaka, Japan, 2009.
 
 .. [Bourinet2010] J.-M. Bourinet. FERUM 4.1 User’s Guide, 2010.
 
+.. [Breitung1984] Breitung, K. 1984 Asymptotic approximations for multinormal integrals. J. Eng. Mech. ASCE 110, 357–367.
+
 .. [DerKiureghian2006] A. Der Kiureghian, T. Haukaas, and K. Fujimura. Structural reliability software at the University of California, Berkeley. Structural Safety, 28(1-2):44–67, 2006.
 
 .. [Hackl2013] J. Hackl. Generic Framework for Stochastic Modeling of Reinforced Concrete Deterioration Caused by Corrosion. Master’s thesis, Norwegian University of Science and Technology, Trondheim, Norway, 2013.
+
+.. [Hohenbichler1988] Hohenbichler, M. & Rackwitz, R. 1988 Improvement of second-order reliability estimates by importance sampling. J. Eng. Mech. ASCE 14, 2195–2199.
 
 .. [Langtangen2009] Hans Petter Langtangen. Python Scripting for Computational Science. Springer-Verlag, 2009.
 

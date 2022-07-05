@@ -1,5 +1,3 @@
-.. _chap_theo:
-
 **********************
 Theoretical Background
 **********************
@@ -11,7 +9,7 @@ Structural Reliability
 Structural reliability analysis (SRA) is an important part to handle
 structural engineering applications. This section provides a brief
 introduction to this topic and is also the theoretical background for the
-Python library, Python Structural Reliability Analysis (Pystra).
+Python library, Python Structural Reliability Analysis (`Pystra`).
 
 Limit States
 ------------
@@ -109,7 +107,7 @@ rewritten as a convolution integral, where the probability of failure
 
              p_f = P(R-S \leq 0) = \int_{-\infty}^{\infty} F_R(x) f_{S}(x) d x
 
-.. figure:: _images/f-02-07-a.*
+.. figure:: images/f-02-07-a.*
    :alt: Classical Approach R − S.
    :align: center
    :scale: 50
@@ -150,7 +148,7 @@ Cornell (1969), and is equal to the number of the standard derivation
 :math:`\sigma_M` by which the mean values :math:`\mu_M` of the safety margin
 :math:`M` are zero. [Faber2009]_
 
-.. figure:: _images/f-02-08-a.*
+.. figure:: images/f-02-08-a.*
    :alt: Safety Margin an Reliability Index
    :align: center
    :scale: 50
@@ -352,7 +350,7 @@ Reliability Method (FORM) and :math:`\beta` is the First Order Reliability
 Index. [Madsen2006]_
 
 
-.. figure:: _images/f-02-09-a.*
+.. figure:: images/f-02-09-a.*
    :alt: FORM a
    :align: center
    :scale: 50
@@ -361,7 +359,7 @@ Representation of a physical space with a set :math:`{\bf X}` of any two
 random variables. The shaded area denotes the failure domain and
 :math:`g({\bf X}) = 0` the failure surface.
 
-.. figure:: _images/f-02-09-b.*
+.. figure:: images/f-02-09-b.*
    :alt: FORM b
    :align: center
    :scale: 50
@@ -371,7 +369,7 @@ transformation in the normalized space, the random variables :math:`{\bf X}`
 are now uncorrelated and standardized normally distributed, also the failure
 surface is transformed into :math:`g({\bf Z}) = 0`.
 
-.. figure:: _images/f-02-09-c.*
+.. figure:: images/f-02-09-c.*
    :alt: FORM c
    :align: center
    :scale: 50
@@ -487,7 +485,7 @@ The key to this approach is to choose :math:`h_{X} ({\bf X})` so that samples
 are obtained more frequently from the failure domain. For this reason, often a
 FORM (or SORM) analysis is performed to find a prior design point. [Baker2010]
 
-.. figure:: _images/f-02-10-a.*
+.. figure:: images/f-02-10-a.*
    :alt: MC a
    :align: center
    :scale: 50
@@ -496,7 +494,7 @@ Representation of a physical space with a set :math:`{\bf X}` of any two
 random variables. The shaded area denotes the failure domain and `g({\bf X}) =
 0` the failure surface.
 
-.. figure:: _images/f-02-10-b.*
+.. figure:: images/f-02-10-b.*
    :alt: MC b
    :align: center
    :scale: 50
@@ -504,7 +502,7 @@ random variables. The shaded area denotes the failure domain and `g({\bf X}) =
 For the CMC method every dot corresponds to one configuration of the random
 variables :math:`{\bf X}`. Dots in shaded areas lead to a failure.
 
-.. figure:: _images/f-02-10-c.*
+.. figure:: images/f-02-10-c.*
    :alt: MC c
    :align: center
    :scale: 50

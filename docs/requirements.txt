@@ -1,8 +1,12 @@
-Sphinx==4.0.2
-sphinx-rtd-theme==0.5.1
-sphinxcontrib-applehelp==1.0.2
-sphinxcontrib-devhelp==1.0.2
-sphinxcontrib-htmlhelp==1.0.3
-sphinxcontrib-jsmath==1.0.1
-sphinxcontrib-qthelp==1.0.3
-sphinxcontrib-serializinghtml==1.1.4
+numpy
+matplotlib
+pytest>=6.1.1
+setuptools
+scipy
+pydata-sphinx-theme
+Sphinx>=4.0
+nbsphinx
+sphinx-autodoc-typehints
+pandoc
+markupsafe==2.0.1
+pygments >= 2.7
