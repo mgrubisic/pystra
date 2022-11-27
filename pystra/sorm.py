@@ -4,8 +4,7 @@
 import numpy as np
 
 from .form import Form
-from .model import StochasticModel, AnalysisOptions, LimitState, AnalysisObject
-from .transformation import jacobian, x_to_u, u_to_x
+from .analysis import AnalysisObject
 from scipy.stats import norm as normal
 
 
@@ -28,15 +27,15 @@ class Sorm(AnalysisObject):
     formula, which is more accurate for lower values of \\beta.
 
     :Attributes:
-      - analysis_option (AnalysisOption): Option for the structural analysis
-      - limit_state (LimitState): Information about the limit state
       - stochastic_model (StochasticModel): Information about the model
+      - limit_state (LimitState): Information about the limit state
+      - analysis_option (AnalysisOption): Option for the structural analysis
       - form (Form): Form object, if a FORM analysis has already been completed
 
     """
 
     def __init__(
-        self, analysis_options=None, limit_state=None, stochastic_model=None, form=None
+        self, stochastic_model=None, limit_state=None, analysis_options=None, form=None
     ):
         """
         Class constructor
@@ -49,7 +48,11 @@ class Sorm(AnalysisObject):
 
         # Has FORM already been run? If it exists it has, otherwise run it now
         if form is None:
-            self.form = Form(self.options, self.limitstate, self.model)
+            self.form = Form(
+                stochastic_model=self.model,
+                limit_state=self.limitstate,
+                analysis_options=self.options,
+            )
             self.form.run()
         else:
             self.form = form
@@ -69,6 +72,7 @@ class Sorm(AnalysisObject):
             Point-fitting: fit_type == 'pf'
         """
         self.results_valid = True
+        self.init_run()
 
         if fit_type != "cf":
             raise ValueError("Point-Fitting not yet supported")
@@ -138,7 +142,7 @@ class Sorm(AnalysisObject):
         print("Probability of failure:        ", self.pf2_breitung[0])
         print("")
         for i, k in enumerate(self.kappa):
-            print(f"Curavture {i+1}: {k}")
+            print(f"Curvature {i+1}: {k}")
         print("=" * n_hyphen)
         print("")
 
@@ -218,7 +222,7 @@ class Sorm(AnalysisObject):
             for i in range(nrv):
                 u1 = np.copy(u0)
                 u1[i] += h
-                x1 = u_to_x(u1, self.model)
+                x1 = self.transform.u_to_x(u1, self.model.getMarginalDistributions())
                 _, grad_g1 = self.evaluateLSF(x1[:, np.newaxis], calc_gradient=True)
                 hess_G[:, i] = ((grad_g1 - grad_g0) / h).reshape(nrv)
 
@@ -233,24 +237,27 @@ class Sorm(AnalysisObject):
             all_x_minus = np.zeros((nrv, nrv))
             all_x_both = np.zeros((nrv, int(nrv * (nrv - 1) / 2)))
 
+            marg = self.model.getMarginalDistributions()
             for i in range(nrv):
                 # Plus perturbation and transformation
                 u_plus = np.copy(u0)
                 u_plus[i] += h
-                x_plus = u_to_x(u_plus, self.model)
+                x_plus = self.transform.u_to_x(u_plus, marg)
                 all_x_plus[:, i] = x_plus
 
                 # Minus perturbation and transformation
                 u_minus = np.copy(u0)
                 u_minus[i] -= h
-                x_minus = u_to_x(u_minus, self.model)
+                x_minus = self.transform.u_to_x(u_minus, marg)
                 all_x_minus[:, i] = x_minus
 
                 for j in range(i):
                     # Mixed perturbation and transformation
                     u_both = np.copy(u_plus)
                     u_both[j] += h
-                    x_both = u_to_x(u_both, self.model)
+                    x_both = self.transform.u_to_x(
+                        u_both, self.model.getMarginalDistributions()
+                    )
                     all_x_both[:, int((i - 1) * (i) / 2) + j] = x_both
 
             # Assemble all x-space vecs, solve for G, then separate
@@ -295,8 +302,9 @@ class Sorm(AnalysisObject):
             G, grad = self.limitstate.evaluate_lsf(x0, self.model, self.options)
             grad = np.transpose(grad)
             if u_space:
-                u = x_to_u(x0, self.model)
-                J_u_x = jacobian(u, x0, self.model)
+                marg = self.model.getMarginalDistributions()
+                u = self.transform.x_to_u(x0, marg)
+                J_u_x = self.transform.jacobian(u, x0, marg)
                 J_x_u = np.linalg.inv(J_u_x)
                 grad = np.dot(grad, J_x_u)
         else:

@@ -11,14 +11,16 @@ The API will appear here
     :template: custom-module-template.rst
     :recursive:
 
+    pystra.analysis
+    pystra.model
     pystra.form
     pystra.sorm
-    pystra.cholesky
+    pystra.mc
+    pystra.transformation
     pystra.correlation
     pystra.integration
-    pystra.mc
-    pystra.model
     pystra.quadrature
     pystra.sensitivity
-    pystra.stepsize
-    pystra.transformation
+    pystra.loadcomb
+    pystra.calibration
+    pystra.distributions
