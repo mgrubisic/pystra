@@ -2,33 +2,32 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from scipy.stats import rayleigh
+from scipy.stats import gumbel_l as gumbel
 
 from .distribution import Distribution
 
 
-class ShiftedRayleigh(Distribution):
-    """Shifted Rayleigh distribution
+class TypeIsmallestValue(Distribution):
+    """Type I smallest value distribution
 
     :Attributes:
       - name (str):   Name of the random variable\n
-      - mean (float): Mean or a\n
-      - stdv (float): Standard deviation or x_zero\n
+      - mean (float): Mean or mu\n
+      - stdv (float): Standard deviation or beta\n
       - input_type (any): Change meaning of mean and stdv\n
       - startpoint (float): Start point for seach\n
     """
 
     def __init__(self, name, mean, stdv, input_type=None, startpoint=None):
-
         if input_type is None:
-            a = stdv / ((2 - np.pi * 0.5) ** 0.5)
-            x_zero = mean - stdv * (np.pi / (4 - np.pi)) ** 0.5
+            beta = np.pi / (stdv * np.sqrt(6))
+            mu = mean + (0.5772156649 * stdv * np.sqrt(6)) / np.pi
         else:
-            a = mean
-            x_zero = stdv
+            mu = mean
+            beta = stdv
 
         # use scipy to do the heavy lifting
-        self.dist_obj = rayleigh(loc=x_zero, scale=a)
+        self.dist_obj = gumbel(loc=mu, scale=1 / beta)
 
         super().__init__(
             name=name,
@@ -36,4 +35,4 @@ class ShiftedRayleigh(Distribution):
             startpoint=startpoint,
         )
 
-        self.dist_type = "ShiftedRayleigh"
+        self.dist_type = "TypeIsmallestValue"
