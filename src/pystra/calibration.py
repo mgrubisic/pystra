@@ -6,6 +6,7 @@ from scipy.optimize import fsolve
 from .distributions import Constant
 from .model import LimitState, StochasticModel
 from .form import Form
+from .analysis import AnalysisObject
 import matplotlib.pyplot as plt
 
 
@@ -96,9 +97,14 @@ class Calibration:
         self.calib_method = calib_method
         self.est_method = est_method
         self.print_output = print_output
-        self.dict_nom = dict_nom_vals
+        # Ensure nominal values are writable — ppf() and np.concatenate()
+        # can produce read-only arrays in newer NumPy/SciPy, which would
+        # propagate to DataFrames and cause fill_diagonal failures downstream.
+        self.dict_nom = {
+            k: np.float64(v) for k, v in dict_nom_vals.items()
+        }
         self.df_nom = pd.DataFrame(
-            data=dict_nom_vals, index=loadcombobj.label_comb_cases
+            data=self.dict_nom, index=loadcombobj.label_comb_cases
         )
         (
             self.label_R,
@@ -531,9 +537,14 @@ class Calibration:
 
         """
         df_psi_max = dfpsi[self.label_comb_vrs].copy()
-        np.fill_diagonal(df_psi_max.values, 0.0)
+        # Set diagonal elements via iloc; np.fill_diagonal on .values or
+        # .to_numpy() fails on newer pandas/NumPy where the underlying
+        # array may be read-only.
+        for i in range(min(df_psi_max.shape)):
+            df_psi_max.iloc[i, i] = 0.0
         df_psi_max = df_psi_max.clip(df_psi_max.max(), axis=1)
-        np.fill_diagonal(df_psi_max.values, 1.0)
+        for i in range(min(df_psi_max.shape)):
+            df_psi_max.iloc[i, i] = 1.0
         if len(self.label_other) > 0:
             df_psi_max.loc[:, self.label_other] = dfpsi[self.label_other]
         return df_psi_max
@@ -972,7 +983,7 @@ class Calibration:
         None.
 
         """
-        n = 54
+        n = AnalysisObject.N_HYPH
         print("\n")
         print("=" * n)
         print("X* = \n", self.dfXstarcal.round(precision))
@@ -1561,9 +1572,9 @@ class GenericCalibration:
             Target reliability index.
         ranges : Dict
             A dictionary of range information with the following keys:
-                xl, xu, ytext, text, alpha
-            defining the lower and upper aq values, the position of the text, the text,
-            and the alpha of the range colouring.
+            ``xl``, ``xu``, ``ytext``, ``text``, ``alpha``
+            — defining the lower and upper aq values, the position of
+            the text, the text, and the alpha of the range colouring.
         figsize : Tuple(float), optional
             The figure size in inches. The default is (12, 9).
 
@@ -1605,9 +1616,9 @@ class GenericCalibration:
             Target reliability index.
         ranges : Dict
             A dictionary of range information with the following keys:
-                xl, xu, ytext, text, alpha
-            defining the lower and upper aq values, the position of the text, the text,
-            and the alpha of the range colouring.
+            ``xl``, ``xu``, ``ytext``, ``text``, ``alpha``
+            — defining the lower and upper aq values, the position of
+            the text, the text, and the alpha of the range colouring.
 
         Raises
         ------

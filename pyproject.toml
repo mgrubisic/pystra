@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools >= 64.0",
-            "oldest-supported-numpy"]
+            "numpy"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -23,12 +23,13 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: Microsoft :: Windows",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
     "matplotlib",
     "numpy",
@@ -48,6 +49,13 @@ Tracker = "https://github.com/pystra/pystra/issues/"
 
 [project.optional-dependencies]
 test = ["pytest >= 6.2.2"]
+docs = [
+    "sphinx",
+    "pydata-sphinx-theme",
+    "sphinx-autodoc-typehints",
+    "nbsphinx",
+    "ipykernel",
+]
 
 [tool.setuptools]
 platforms = ["any"]

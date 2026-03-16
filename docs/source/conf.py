@@ -20,7 +20,7 @@ from pystra import __version__ as ver
 # -- Project information -----------------------------------------------------
 
 project = "PySTRA"
-copyright = "2023, The PySTRA Developers"
+copyright = "2021-2026, The PySTRA Developers"
 author = "Colin Caprani, Shihab Khan, Jürgen Hackl"
 
 # The full version, including alpha/beta/rc tags
@@ -71,7 +71,12 @@ source_suffix = [".rst", ".md"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = [
+    # Legacy files superseded by current notebooks/content
+    "notebooks/intro.rst",
+    "notebooks/ex_code_calibration.ipynb",
+    "notebooks/example_global_calibration.ipynb",
+]
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -113,3 +118,4 @@ html_logo = "./images/logo/icon_pystra_small.png"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+html_css_files = ["custom.css"]

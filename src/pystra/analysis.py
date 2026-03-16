@@ -1,3 +1,10 @@
+"""Base classes for reliability analysis.
+
+:class:`AnalysisObject` is the common base for FORM, SORM, and Monte
+Carlo analysis classes.  :class:`AnalysisOptions` holds all
+user-configurable parameters for these analyses.
+"""
+
 import numpy as np
 from .model import StochasticModel, LimitState
 from .transformation import Transformation
@@ -5,9 +12,38 @@ from .correlation import setModifiedCorrelationMatrix
 
 
 class AnalysisObject:
+    """Base class for reliability analysis objects (FORM, SORM, MC).
+
+    .. note::
+        Subclasses should use ``self.N_HYPH`` for the width of console
+        separator lines printed by ``showResults()``.
+
+    Handles the common set-up shared by all analysis types: storing the
+    stochastic model, limit state, and analysis options, and providing
+    the ``init_run`` method that computes the Nataf correlation and
+    isoprobabilistic transformation before the analysis-specific
+    iteration begins.
+
+    Parameters
+    ----------
+    stochastic_model : StochasticModel, optional
+        The probabilistic model.
+    limit_state : LimitState, optional
+        The limit state function.
+    analysis_options : AnalysisOptions, optional
+        Algorithm settings.
+
+    Attributes
+    ----------
+    model : StochasticModel
+    limitstate : LimitState
+    options : AnalysisOptions
+    transform : Transformation
+    results_valid : bool
+        ``True`` after a successful ``run()``.
     """
-    A base class for objects that perform a probability of failure estimation
-    """
+
+    N_HYPH = 58  # Width of console separator lines in showResults()
 
     def __init__(self, stochastic_model=None, limit_state=None, analysis_options=None):
         # The stochastic model
@@ -34,8 +70,11 @@ class AnalysisObject:
         self.results_valid = False
 
     def init_run(self):
-        """
-        Derived classes call this at top of their run()
+        """Initialise the Nataf transformation before the analysis loop.
+
+        Computes the modified (Nataf) correlation matrix and its
+        factorisation.  Must be called at the start of every
+        ``run()`` method in subclasses.
         """
 
         if self.options.getPrintOutput():
@@ -60,9 +99,11 @@ class AnalysisObject:
 
 
 class AnalysisOptions:
-    """Options
+    """Configuration for structural reliability analyses.
 
-    Options for the structural reliability analysis.
+    All FORM, SORM, and Monte Carlo settings are collected here.
+    Attributes can be set directly or via the legacy getter/setter
+    methods.
     """
 
     def __init__(self):

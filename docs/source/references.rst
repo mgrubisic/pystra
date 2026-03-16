@@ -6,19 +6,21 @@ References
 
 .. [Bourinet2010] J.-M. Bourinet. FERUM 4.1 User’s Guide, 2010.
 
+.. [Bourinet2017] J.-M. Bourinet. "FORM Sensitivities to Distribution Parameters with the Nataf Transformation". In: P. Gardoni (ed.), Risk and Reliability Analysis: Theory and Applications, Springer Series in Reliability Engineering, pp. 277–302, 2017. DOI: 10.1007/978-3-319-52425-2_12.
+
 .. [Breitung1984] Breitung, K. 1984 Asymptotic approximations for multinormal integrals. J. Eng. Mech. ASCE 110, 357–367.
 
-.. [DerKiureghian2006] A. Der Kiureghian, T. Haukaas, and K. Fujimura. Structural reliability software at the University of California, Berkeley. Structural Safety, 28(1-2):44–67, 2006.
+.. [DerKiureghian2006] Der Kiureghian, A. and Liu, P.-L. (1986). "Structural Reliability Under Incomplete Probability Information". In: Journal of Engineering Mechanics Vol 112.No 1, pp. 85–104.
 
-.. [Hackl2013] J. Hackl. Generic Framework for Stochastic Modeling of Reinforced Concrete Deterioration Caused by Corrosion. Master’s thesis, Norwegian University of Science and Technology, Trondheim, Norway, 2013.
+.. [Hackl2013] Hackl, J. (2013). Generic Framework for Stochastic Modeling of Reinforced Concrete Deterioration Caused by Corrosion. Master's thesis, Norwegian University of Science and Technology, NTNU.
+
+.. [Melchers1999] Melchers, R. E. (1999). Structural Reliability Analysis and Prediction. Second edition. Chichester, UK: John Wiley and Sons. isbn: 9780471987710.
 
 .. [Hohenbichler1988] Hohenbichler, M. & Rackwitz, R. 1988 Improvement of second-order reliability estimates by importance sampling. J. Eng. Mech. ASCE 14, 2195–2199.
 
 .. [Langtangen2009] Hans Petter Langtangen. Python Scripting for Computational Science. Springer-Verlag, 2009.
 
-.. [Lutz2007] M. Lutz. Learning Python. O’Reilly, 2007.
-
-.. [Melchers1999] R.D. Melchers. structural reliability analysis and prediction Ellishorwood limited, Manchester, 1999.
+.. [Lutz2007] M. Lutz. Learning Python. O'Reilly, 2007.
 
 .. [Malioka2009] Malioka, Vasiliki (2009). Condition indicators for the assessment of local and spatial deterioration of concrete structures. Institut fur Baustatik und Konstruktion. Zurich: vdf Hochschulverlag. isbn: 9783728133229.
 
@@ -38,7 +40,13 @@ References
 
 .. [Thoft-Christensen] Thoft-Christensen, Palle and Michael J. Baker (1982). Structural Reliability Theory and its Applications. Heidelberg: Springer Verlag. isbn: 9783540117315.
 
-.. [Liu1986] Liu, Pei-Ling and Armen Der Kiureghian (1986). “Multivariate distribution models with prescribed marginals and covariances”. In: Probabilistic Engineering Mechanics Vol 1.No 2, pp. 105–112. issn: 0266-8920.
+.. [Liu1986] Liu, Pei-Ling and Armen Der Kiureghian (1986). "Multivariate distribution models with prescribed marginals and covariances". In: Probabilistic Engineering Mechanics Vol 1.No 2, pp. 105–112. issn: 0266-8920.
 
-.. [Rosenblatt1952] Rosenblatt, Murray (1952). “Remarks on a Multivariate Transformation”. In: The Annals of Mathematical Statistics Vol 23.No 3, pp. 470–472.
+.. [Rosenblatt1952] Rosenblatt, Murray (1952). "Remarks on a Multivariate Transformation". In: The Annals of Mathematical Statistics Vol 23.No 3, pp. 470–472.
+
+.. [AuBeck2001] Au, S. K., & Beck, J. L. (2001). Estimation of small failure probabilities in high dimensions by subset simulation. Probabilistic Engineering Mechanics, 16(4), 263–277.
+
+.. [Koutsourelakis2004] Koutsourelakis, P. S., Pradlwarter, H. J., & Schuëller, G. I. (2004). Reliability of structures in high dimensions, Part I: algorithms and applications. Probabilistic Engineering Mechanics, 19(4), 409–417.
+
+.. [Schueller2007] Schuëller, G. I., & Pradlwarter, H. J. (2007). Benchmark study on reliability estimation in higher dimensions of structural systems — An overview. Structural Safety, 29(3), 167–182.
 
