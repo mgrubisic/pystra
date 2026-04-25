@@ -52,6 +52,7 @@ Load Combinations & Calibration
     :template: custom-module-template.rst
     :recursive:
 
+    pystra.fbc
     pystra.loadcomb
     pystra.calibration
 

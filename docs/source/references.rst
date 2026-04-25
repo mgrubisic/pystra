@@ -40,6 +40,8 @@ References
 
 .. [Thoft-Christensen] Thoft-Christensen, Palle and Michael J. Baker (1982). Structural Reliability Theory and its Applications. Heidelberg: Springer Verlag. isbn: 9783540117315.
 
+.. [Sorensen2004] J. D. Sørensen. Notes in Structural Reliability Theory and Risk Analysis. Aalborg University, 2004.
+
 .. [Liu1986] Liu, Pei-Ling and Armen Der Kiureghian (1986). "Multivariate distribution models with prescribed marginals and covariances". In: Probabilistic Engineering Mechanics Vol 1.No 2, pp. 105–112. issn: 0266-8920.
 
 .. [Rosenblatt1952] Rosenblatt, Murray (1952). "Remarks on a Multivariate Transformation". In: The Annals of Mathematical Statistics Vol 23.No 3, pp. 470–472.
@@ -49,4 +51,3 @@ References
 .. [Koutsourelakis2004] Koutsourelakis, P. S., Pradlwarter, H. J., & Schuëller, G. I. (2004). Reliability of structures in high dimensions, Part I: algorithms and applications. Probabilistic Engineering Mechanics, 19(4), 409–417.
 
 .. [Schueller2007] Schuëller, G. I., & Pradlwarter, H. J. (2007). Benchmark study on reliability estimation in higher dimensions of structural systems — An overview. Structural Safety, 29(3), 167–182.
-
