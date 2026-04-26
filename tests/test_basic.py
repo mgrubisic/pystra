@@ -54,6 +54,8 @@ def test_form():
 
     # validate results
     assert pytest.approx(Analysis.beta, abs=1e-4) == 3.7347
+    assert np.isscalar(Analysis.beta)
+    assert np.isscalar(Analysis.Pf)
 
 
 def test_form_svd():

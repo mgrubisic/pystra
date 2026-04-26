@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import math
+
 import pytest
 
 import pystra as ra
@@ -128,6 +130,29 @@ def test_turkstra_cases_match_sorensen_example_4_distribution_exponents():
         == Q1max.cdf(q) ** 0.5
     )
     assert pytest.approx(q2_leading["Q2"].cdf(q), abs=1e-8) == Q2max.cdf(q)
+
+
+def test_from_maximum_round_trip_preserves_high_recurrence_maximum():
+    Qmax = ra.Gumbel("Q", 1.0, 0.4)
+    process = ra.FBCProcess.from_maximum(
+        "Q", maximum=Qmax, maximum_duration=1.0, basic_interval=1 / 360
+    )
+
+    recovered = process.maximum(duration=1.0)
+
+    assert recovered.stdv > 0.1
+    assert isinstance(recovered.ppf(0.5), float)
+    for p in (0.1, 0.5, 0.9):
+        assert pytest.approx(recovered.ppf(p), abs=1e-10) == Qmax.ppf(p)
+
+
+def test_max_parent_ppf_handles_underflow_tail_probability():
+    Qmax = ra.Gumbel("Q", 1.0, 0.4)
+    parent = ra.MaxParent("Q", Qmax, N=360)
+
+    x = parent.ppf(math.exp(-800 / 360))
+
+    assert pytest.approx(Qmax.dist_obj.logcdf(x), abs=1e-10) == -800
 
 
 def test_loadcombination_legacy_inputs_are_normalized():

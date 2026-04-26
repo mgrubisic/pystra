@@ -8,6 +8,9 @@ References
 
 .. [Bourinet2017] J.-M. Bourinet. "FORM Sensitivities to Distribution Parameters with the Nataf Transformation". In: P. Gardoni (ed.), Risk and Reliability Analysis: Theory and Applications, Springer Series in Reliability Engineering, pp. 277–302, 2017. DOI: 10.1007/978-3-319-52425-2_12.
 
+Breitung 1984
+-------------
+
 .. [Breitung1984] Breitung, K. 1984 Asymptotic approximations for multinormal integrals. J. Eng. Mech. ASCE 110, 357–367.
 
 .. [DerKiureghian2006] Der Kiureghian, A. and Liu, P.-L. (1986). "Structural Reliability Under Incomplete Probability Information". In: Journal of Engineering Mechanics Vol 112.No 1, pp. 85–104.
@@ -40,6 +43,9 @@ References
 
 .. [Thoft-Christensen] Thoft-Christensen, Palle and Michael J. Baker (1982). Structural Reliability Theory and its Applications. Heidelberg: Springer Verlag. isbn: 9783540117315.
 
+Sorensen 2004
+-------------
+
 .. [Sorensen2004] J. D. Sørensen. Notes in Structural Reliability Theory and Risk Analysis. Aalborg University, 2004.
 
 .. [Liu1986] Liu, Pei-Ling and Armen Der Kiureghian (1986). "Multivariate distribution models with prescribed marginals and covariances". In: Probabilistic Engineering Mechanics Vol 1.No 2, pp. 105–112. issn: 0266-8920.
@@ -49,5 +55,8 @@ References
 .. [AuBeck2001] Au, S. K., & Beck, J. L. (2001). Estimation of small failure probabilities in high dimensions by subset simulation. Probabilistic Engineering Mechanics, 16(4), 263–277.
 
 .. [Koutsourelakis2004] Koutsourelakis, P. S., Pradlwarter, H. J., & Schuëller, G. I. (2004). Reliability of structures in high dimensions, Part I: algorithms and applications. Probabilistic Engineering Mechanics, 19(4), 409–417.
+
+Schueller and Pradlwarter 2007
+------------------------------
 
 .. [Schueller2007] Schuëller, G. I., & Pradlwarter, H. J. (2007). Benchmark study on reliability estimation in higher dimensions of structural systems — An overview. Structural Safety, 29(3), 167–182.

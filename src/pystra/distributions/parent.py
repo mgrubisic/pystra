@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+from scipy import special as sp
 import scipy.optimize as opt
 
 from .distribution import Distribution
@@ -67,12 +68,67 @@ class MaxParent(Distribution):
         inverse cumulative distribution function
         """
         scalar_input = np.isscalar(p)
-        p = np.atleast_1d(p)
-        x = np.zeros_like(p)
-        x0 = self.max_dist.mean
-        for i, p_val in enumerate(p):
-            par = opt.fmin(self.zero_distn, x0, args=(p_val,), disp=False)
-            x[i] = par[0]
+        p = np.atleast_1d(np.asarray(p, dtype=float))
+        x = np.empty_like(p, dtype=float)
+
+        log_tiny = np.log(np.finfo(float).tiny)
+        log_one = np.log(np.nextafter(1.0, 0.0))
+        center = self.max_dist.mean
+        if not np.isfinite(center):
+            center = 0.0
+        step0 = self.max_dist.stdv
+        if not np.isfinite(step0) or step0 <= 0:
+            step0 = 1.0
+
+        if (
+            type(self.max_dist).cdf is Distribution.cdf
+            and self.max_dist.dist_obj is not None
+        ):
+            logcdf = self.max_dist.dist_obj.logcdf
+        elif self.max_dist.dist_type == "Normal":
+            logcdf = lambda q: sp.log_ndtr(
+                (q - self.max_dist.mean) / self.max_dist.stdv
+            )
+        else:
+            def logcdf(q):
+                with np.errstate(divide="ignore"):
+                    return np.log(self.max_dist.cdf(q))
+
+        for index, p_val in np.ndenumerate(p):
+            if p_val <= 0:
+                x[index] = self.max_dist.ppf(0)
+                continue
+            if p_val >= 1:
+                x[index] = self.max_dist.ppf(1)
+                continue
+
+            target_log_cdf = self.N * np.log(p_val)
+            if log_tiny <= target_log_cdf <= log_one:
+                x[index] = self.max_dist.ppf(np.exp(target_log_cdf))
+                continue
+
+            residual = lambda q: logcdf(q) - target_log_cdf
+            step = step0
+            lower = center - step
+            upper = center + step
+            for _ in range(100):
+                lower_res = residual(lower)
+                upper_res = residual(upper)
+                if lower_res <= 0 <= upper_res:
+                    x[index] = opt.brentq(
+                        residual, lower, upper, xtol=1e-12, rtol=1e-12
+                    )
+                    break
+                if lower_res > 0:
+                    upper = lower
+                    lower -= step
+                if upper_res < 0:
+                    lower = upper
+                    upper += step
+                step *= 2
+            else:
+                raise RuntimeError("Could not bracket MaxParent inverse CDF.")
+
         if scalar_input:
             return x.item()
         return x
@@ -143,9 +199,3 @@ class MaxParent(Distribution):
         m, s = self._get_stats()
         self.mean = m
         self.stdv = s
-
-    def zero_distn(self, x, *args):
-        p = args
-        cdf = self.cdf(x)
-        zero = np.absolute(cdf - p)
-        return zero

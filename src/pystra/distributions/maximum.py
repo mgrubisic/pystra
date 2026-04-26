@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import scipy.optimize as opt
 
 from .distribution import Distribution
 
@@ -64,14 +63,9 @@ class Maximum(Distribution):
         inverse cumulative distribution function
         """
         scalar_input = np.isscalar(p)
-        p = np.atleast_1d(p)
-        x = np.zeros_like(p)
-        x0 = self.parent.mean
-        for i, p_val in enumerate(p):
-            par = opt.fmin(self.zero_distn, x0, args=(p_val,), disp=False)
-            x[i] = par[0]
+        x = self.parent.ppf(np.asarray(p) ** (1 / self.N))
         if scalar_input:
-            return x.item()
+            return np.asarray(x).item()
         return x
 
     def u_to_x(self, u):
@@ -133,9 +127,3 @@ class Maximum(Distribution):
         m, s = self._get_stats()
         self.mean = m
         self.stdv = s
-
-    def zero_distn(self, x, *args):
-        p = args
-        cdf = self.cdf(x)
-        zero = np.absolute(cdf - p)
-        return zero

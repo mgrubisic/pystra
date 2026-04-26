@@ -18,7 +18,6 @@ page.
     notebooks/ex_scipy_distributions
     notebooks/ex_sensitivity
     notebooks/ex_ddm
-    notebooks/ex_openseespy
     notebooks/ex_timing
     notebooks/ex_load_combinations
     notebooks/ex_factor_calibration
