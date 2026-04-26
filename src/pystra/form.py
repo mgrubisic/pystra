@@ -6,6 +6,8 @@ from scipy.stats import norm as normal
 from .analysis import AnalysisObject
 from .correlation import setModifiedCorrelationMatrix
 
+__all__ = ["Form"]
+
 
 class Form(AnalysisObject):
     r"""First Order Reliability Method (FORM)

@@ -19,7 +19,7 @@ from .integration import zi_and_xi, rho_integral
 class CorrelationMatrix:
     r"""Physical-space correlation matrix wrapper.
 
-    A thin wrapper around a NumPy array that stores the correlation
+    A wrapper around a NumPy array that stores the correlation
     matrix of :math:`n` random variables :math:`X_1, \dots, X_n`.
     The :math:`(i, j)` entry is :math:`\text{corr}(X_i, X_j)`.
 

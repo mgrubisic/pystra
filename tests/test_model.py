@@ -235,6 +235,16 @@ class TestCorrelationMatrix:
         r = repr(C)
         assert "1.0" in r
 
+    def test_setCorrelation_accepts_wrapper(self):
+        """setCorrelation accepts a CorrelationMatrix wrapper."""
+        model = ra.model.StochasticModel()
+        model.addVariable(Normal("X1", 10, 2))
+        model.addVariable(Normal("X2", 5, 1))
+        model.setCorrelation(CorrelationMatrix([[1.0, 0.5], [0.5, 1.0]]))
+        np.testing.assert_array_equal(
+            model.getCorrelation(), np.array([[1.0, 0.5], [0.5, 1.0]])
+        )
+
     def test_modified_correlation_uncorrelated_normals(self):
         """For uncorrelated normals, modified correlation should be identity."""
         model = ra.model.StochasticModel()
