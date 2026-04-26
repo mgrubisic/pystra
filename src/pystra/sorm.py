@@ -169,7 +169,7 @@ class Sorm(AnalysisObject):
         --------
         run_curvefit : Alternative SORM approach using Hessian eigenvalues.
         """
-        beta = self.form.beta[0]
+        beta = self.form.getBeta()
         nrv = self.form.alpha.shape[1]
         R1 = self.orthonormal_matrix()
         marg = self.model.getMarginalDistributions()
@@ -305,15 +305,15 @@ class Sorm(AnalysisObject):
         is_invalid = np.any(terms_plus <= 0) or np.any(terms_minus <= 0)
 
         if not is_invalid:
-            self.pf2_breitung = np.atleast_1d(
+            self.pf2_breitung = float(
                 normal.cdf(-beta)
                 * np.prod(0.5 * (terms_plus ** (-0.5) + terms_minus ** (-0.5)))
             )
-            self.betag_breitung = np.atleast_1d(-normal.ppf(self.pf2_breitung[0]))
+            self.betag_breitung = float(-normal.ppf(self.pf2_breitung))
         else:
             print("*** SORM Point-Fitting Breitung error, excessive curvatures")
-            self.pf2_breitung = np.atleast_1d(0.0)
-            self.betag_breitung = np.atleast_1d(0.0)
+            self.pf2_breitung = 0.0
+            self.betag_breitung = 0.0
 
     def _pf_breitung_m_pf(self, beta, kappa_minus, kappa_plus):
         """Hohenbichler-Rackwitz modified Breitung for asymmetric curvatures.
@@ -333,15 +333,15 @@ class Sorm(AnalysisObject):
         is_invalid = np.any(terms_plus <= 0) or np.any(terms_minus <= 0)
 
         if not is_invalid:
-            self.pf2_breitung_m = np.atleast_1d(
+            self.pf2_breitung_m = float(
                 normal.cdf(-beta)
                 * np.prod(0.5 * (terms_plus ** (-0.5) + terms_minus ** (-0.5)))
             )
-            self.betag_breitung_m = np.atleast_1d(-normal.ppf(self.pf2_breitung_m[0]))
+            self.betag_breitung_m = float(-normal.ppf(self.pf2_breitung_m))
         else:
             print("*** SORM Point-Fitting Breitung Modified error")
-            self.pf2_breitung_m = np.atleast_1d(0.0)
-            self.betag_breitung_m = np.atleast_1d(0.0)
+            self.pf2_breitung_m = 0.0
+            self.betag_breitung_m = 0.0
 
     def pf_breitung(self, beta, kappa):
         """
@@ -351,14 +351,14 @@ class Sorm(AnalysisObject):
         """
         is_invalid = np.any(kappa < -1 / beta)
         if not is_invalid:
-            self.pf2_breitung = normal.cdf(-beta) * np.prod(
-                (1 + beta * kappa) ** (-0.5)
+            self.pf2_breitung = float(
+                normal.cdf(-beta) * np.prod((1 + beta * kappa) ** (-0.5))
             )
-            self.betag_breitung = -normal.ppf(self.pf2_breitung)
+            self.betag_breitung = float(-normal.ppf(self.pf2_breitung))
         else:
             print("*** SORM Breitung error, excessive curavtures")
-            self.pf2_breitung = 0
-            self.betag_breitung = 0
+            self.pf2_breitung = 0.0
+            self.betag_breitung = 0.0
 
     def pf_breitung_m(self, beta, kappa):
         """
@@ -370,12 +370,14 @@ class Sorm(AnalysisObject):
         k = normal.pdf(beta) / normal.cdf(-beta)
         is_invalid = np.any(kappa < -1 / k)
         if not is_invalid:
-            self.pf2_breitung_m = normal.cdf(-beta) * np.prod((1 + k * kappa) ** (-0.5))
-            self.betag_breitung_m = -normal.ppf(self.pf2_breitung_m)
+            self.pf2_breitung_m = float(
+                normal.cdf(-beta) * np.prod((1 + k * kappa) ** (-0.5))
+            )
+            self.betag_breitung_m = float(-normal.ppf(self.pf2_breitung_m))
         else:
             print("*** SORM Breitung Modified error")
-            self.pf2_breitung_m = 0
-            self.betag_breitung_m = 0
+            self.pf2_breitung_m = 0.0
+            self.betag_breitung_m = 0.0
 
     def showResults(self):
         """Print a compact summary of the SORM results."""
@@ -388,8 +390,8 @@ class Sorm(AnalysisObject):
         print("")
         print(f"RESULTS FROM RUNNING SECOND ORDER RELIABILITY METHOD{fit_label}")
         print("")
-        print("Generalized reliability index: ", self.betag_breitung[0])
-        print("Probability of failure:        ", self.pf2_breitung[0])
+        print("Generalized reliability index: ", self.betag_breitung)
+        print("Probability of failure:        ", self.pf2_breitung)
         print("")
         if self.fit_type == "pf" and self.kappa_pf is not None:
             for i in range(self.kappa_pf.shape[1]):
@@ -412,8 +414,8 @@ class Sorm(AnalysisObject):
         u_star = self.form.getDesignPoint()
         x_star = self.form.getDesignPoint(uspace=False)
         alpha = self.form.getAlpha()
-        betaHL = self.form.beta[0]
-        pfFORM = self.form.Pf
+        betaHL = self.form.getBeta()
+        pfFORM = self.form.getFailure()
 
         fit_label = " (Point-Fitting)" if self.fit_type == "pf" else ""
         n_hyphen = self.N_HYPH
@@ -421,16 +423,16 @@ class Sorm(AnalysisObject):
         print("=" * n_hyphen)
         print(f"FORM/SORM{fit_label}")
         print("=" * n_hyphen)
-        print("{:15s} \t\t {:1.10e}".format("Pf FORM", pfFORM[0]))
-        print("{:15s} \t\t {:1.10e}".format("Pf SORM Breitung", self.pf2_breitung[0]))
+        print("{:15s} \t\t {:1.10e}".format("Pf FORM", pfFORM))
+        print("{:15s} \t\t {:1.10e}".format("Pf SORM Breitung", self.pf2_breitung))
         print(
-            "{:15s} \t {:1.10e}".format("Pf SORM Breitung HR", self.pf2_breitung_m[0])
+            "{:15s} \t {:1.10e}".format("Pf SORM Breitung HR", self.pf2_breitung_m)
         )
         print("{:15s} \t\t {:2.10f}".format("Beta_HL", betaHL))
-        print("{:15s} \t\t {:2.10f}".format("Beta_G Breitung", self.betag_breitung[0]))
+        print("{:15s} \t\t {:2.10f}".format("Beta_G Breitung", self.betag_breitung))
         print(
             "{:15s} \t\t {:2.10f}".format(
-                "Beta_G Breitung HR", self.betag_breitung_m[0]
+                "Beta_G Breitung HR", self.betag_breitung_m
             )
         )
         print(
