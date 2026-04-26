@@ -26,6 +26,8 @@ from .integration import zi_and_xi, drho_drho0, drho0_dtheta
 import copy
 import numpy as np
 
+__all__ = ["SensitivityAnalysis"]
+
 
 class SensitivityAnalysis:
     r"""Sensitivity analysis for the FORM reliability index.

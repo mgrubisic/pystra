@@ -136,7 +136,9 @@ class StochasticModel:
         self._marg = marg
 
     def setCorrelation(self, obj):
-        self._correlation = np.array(obj.getMatrix())
+        if hasattr(obj, "getMatrix"):
+            obj = obj.getMatrix()
+        self._correlation = np.asarray(obj)
 
     def getCorrelation(self):
         return self._correlation
