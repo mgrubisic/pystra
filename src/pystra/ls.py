@@ -98,7 +98,7 @@ class LineSampling(AnalysisObject):
 
         # alpha: unit vector pointing toward the failure region in u-space
         alpha = self.form.getAlpha()  # shape (nrv,)
-        beta_form = float(self.form.getBeta())
+        beta_form = self.form.getBeta()
         self.alpha = alpha
 
         N = self.options.getSamples()

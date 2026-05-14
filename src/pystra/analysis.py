@@ -10,6 +10,8 @@ from .model import StochasticModel, LimitState
 from .transformation import Transformation
 from .correlation import setModifiedCorrelationMatrix
 
+__all__ = ["AnalysisObject", "AnalysisOptions"]
+
 
 class AnalysisObject:
     """Base class for reliability analysis objects (FORM, SORM, MC).

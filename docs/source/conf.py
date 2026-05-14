@@ -13,7 +13,13 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../src/"))
+src_path = os.path.abspath("../../src/")
+sys.path.insert(0, src_path)
+os.environ["PYTHONPATH"] = os.pathsep.join(
+    [src_path, os.environ["PYTHONPATH"]]
+    if "PYTHONPATH" in os.environ
+    else [src_path]
+)
 from pystra import __version__ as ver
 
 
@@ -59,7 +65,9 @@ html_show_sourcelink = (
 )
 autodoc_inherit_docstrings = True  # If no docstring, inherit from base class
 set_type_checking_flag = True  # Enable 'expensive' imports for sphinx_autodoc_typehints
-nbsphinx_allow_errors = True  # Continue through Jupyter errors
+nbsphinx_execute = "always"
+nbsphinx_kernel_name = "python3"
+nbsphinx_allow_errors = False
 add_module_names = False  # Remove namespaces from class/method signatures
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -75,6 +83,7 @@ exclude_patterns = [
     # Legacy files superseded by current notebooks/content
     "notebooks/intro.rst",
     "notebooks/ex_code_calibration.ipynb",
+    "notebooks/ex_openseespy.ipynb",
     "notebooks/example_global_calibration.ipynb",
 ]
 

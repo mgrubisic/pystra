@@ -6,6 +6,8 @@ from scipy.stats import norm as normal
 from .analysis import AnalysisObject
 from .correlation import setModifiedCorrelationMatrix
 
+__all__ = ["Form"]
+
 
 class Form(AnalysisObject):
     r"""First Order Reliability Method (FORM)
@@ -176,7 +178,7 @@ class Form(AnalysisObject):
 
     def computeGamma(self):
         """Compute gamma vector"""
-        self.gamma = np.diag(np.diag(np.sqrt(np.dot(self.J, np.transpose(self.J)))))
+        self.gamma = np.diag(np.sqrt(np.diag(np.dot(self.J, np.transpose(self.J)))))
         # Importance vector gamma
         # matmult = np.dot(np.dot(self.alpha, self.J), self.gamma)
         # importance_vector_gamma = matmult / np.linalg.norm(matmult)
@@ -263,7 +265,7 @@ class Form(AnalysisObject):
 
     def computeBeta(self):
         """Compute beta value"""
-        self.beta = np.dot(self.alpha, self.u)
+        self.beta = np.dot(self.alpha, self.u)[0]
 
     def computeFailureProbability(self):
         """Compute probability of failure"""
@@ -280,8 +282,8 @@ class Form(AnalysisObject):
         print(" RESULTS FROM RUNNING FORM RELIABILITY ANALYSIS")
         print("")
         print(" Number of iterations:     ", self.i)
-        print(" Reliability index beta:   ", self.beta[0])
-        print(" Failure probability:      ", self.Pf[0])
+        print(" Reliability index beta:   ", self.beta)
+        print(" Failure probability:      ", self.Pf)
         print(
             " Number of calls to the limit-state function:",
             self.getNoFunctionCalls(),
@@ -305,8 +307,8 @@ class Form(AnalysisObject):
         print("=" * n_hyphen)
         print("FORM")
         print("=" * n_hyphen)
-        print("{:15s} \t {:1.10e}".format("Pf", self.Pf[0]))
-        print("{:15s} \t {:2.10f}".format("BetaHL", self.beta[0]))
+        print("{:15s} \t {:1.10e}".format("Pf", self.Pf))
+        print("{:15s} \t {:2.10f}".format("BetaHL", self.beta))
         print(
             "{:15s} \t {:d}".format("Model Evaluations", self.model.getCallFunction())
         )
@@ -333,7 +335,7 @@ class Form(AnalysisObject):
         :Returns:
           - beta (float): Returns the beta value
         """
-        return self.beta[0]
+        return self.beta
 
     def getFailure(self):
         """Returns the probability of failure
